@@ -1,0 +1,30 @@
+:toc: macro
+= Script for configuration of Windows Subsystem for Linux
+
+toc::[]
+
+== Installation
+
+Clone repository and launch `install_debian.sh`
+
+== Uninstallation
+
+- Remove the file `~/.wsl-starter`
+- Edit your `~/.bashrc` and remove the last lines :
+----
+if [ -f ~/.wsl-starter ]; then
+  . ~/.wsl-starter
+fi`
+----
+- (optionnal) you can uninstall zsh, docker if you want
+
+== Technical details
+
+=== Script
+
+- A custom script will be installed in your `home` directory called `.wsl-starter`
+- This script is launched at the end of your 
+
+=== Reset Subsystem
+
+You can reset your environment using the windows option located in `Start menu -> Settings -> Apps -> Ubuntu -> Advanced Options`
