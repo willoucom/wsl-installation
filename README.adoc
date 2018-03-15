@@ -1,11 +1,32 @@
 :toc: macro
+:imagesdir: images
 = Script for configuration of Windows Subsystem for Linux
 
 toc::[]
 
+This script has been created to help configuring a suitable environment for Debian/Ubuntu inside Windows Subsystem for Linux
+
+Please read the Technical details for more informations
+
 == Installation
 
-Clone repository and launch `install_debian.sh`
+Install curl or wget and launch 
+
+`curl https://raw.githubusercontent.com/willoucom/wsl-installation/master/install_debian.sh | sudo bash`
+
+`wget -O - https://raw.githubusercontent.com/willoucom/wsl-installation/master/install_debian.sh | sudo bash`
+
+Since this script need root privileges, you must read the script before execute it and/or read the documentation
+
+=== Use with docker for windows 
+
+If you want to use Docker For Windows you will need to expose the docker daemon in the docker configuration
+
+image::docker_port.png[Docker port]
+
+You may also need to share your c: drive if you want to use volumes on disk
+
+image::docker_share.png[Docker share]
 
 == Uninstallation
 
@@ -16,15 +37,52 @@ if [ -f ~/.wsl-starter ]; then
   . ~/.wsl-starter
 fi`
 ----
-- (optionnal) you can uninstall zsh, docker if you want
+- (optional) you can uninstall link:#_installed_packages[installed packages]
 
 == Technical details
 
+=== Installed packages
+
+- apt-transport-https
+- ca-certificates
+- curl
+- docker-ce
+- docker-compose
+- git
+- gnupg2
+- lsb-release
+- software-properties-common
+- unzip
+- wget
+- zsh
+
+and dependancies
+
+=== Zsh 
+
+Zsh and oh-my-zsh is installed and pre-configured (using default options)
+
+You can read the link:https://github.com/robbyrussell/oh-my-zsh/wiki[oh-my-zsh documentation]
+
+If you are looking for a good theme, link:https://github.com/agnoster/agnoster-zsh-theme[agnoster] is a must try
+
+=== Terminal font
+
+If you are looking for a good font for your terminal, especially if you want to use link:https://github.com/powerline/powerline#screenshots[powerline] you can try link:https://fonts.google.com/specimen/Inconsolata[Inconsolata]
+
+=== Docker volume mount 
+
+If you want to use docker volume mount, WSL make an incorrect drive mapping, to correct it, a `bind mount` is created at startup
+
+In essence you must map your `c:/` into `/c/` but WSL map into `/mnt/c/`
+
+Check `~/.wsl-starter` for details
+
 === Script
 
-- A custom script will be installed in your `home` directory called `.wsl-starter`
-- This script is launched at the end of your 
+- A custom script will be installed in `~/.wsl-starter`
+- This script is launched at the end of your `~/.bashrc`
 
 === Reset Subsystem
 
-You can reset your environment using the windows option located in `Start menu -> Settings -> Apps -> Ubuntu -> Advanced Options`
+You can reset your environment using the windows option located in `Start menu -> Settings -> Apps -> Ubuntu/Debian -> Advanced Options`
