@@ -5,8 +5,31 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+# function
+asksure() {
+echo -n "Are you sure (Y/N)? "
+while read -r -n 1 -s answer; do
+  if [[ $answer = [YyNn] ]]; then
+    [[ $answer = [Yy] ]] && retval=0
+    [[ $answer = [Nn] ]] && retval=1
+    break
+  fi
+done
+
+echo # just a final linefeed, optics...
+
+return $retval
+}
+
 # get os version
 OS=`. /etc/os-release; echo $ID`
+
+echo "This will install some tools into your WSL ${OS}"
+if asksure; then
+  echo "Installation"
+else
+  exit 1
+fi
 
 # update linux
 apt-get update
@@ -27,7 +50,6 @@ if ! which docker > /dev/null; then
   apt-get install -y \
     apt-transport-https \
     ca-certificates \
-    curl \
     gnupg2 \
     software-properties-common
   curl -fsSL https://download.docker.com/linux/${OS}/gpg | apt-key add -
@@ -48,9 +70,16 @@ cat > /home/${SUDO_USER}/.wsl-starter <<- EOM
 echo "Starting, please wait..."
 # Export docker host for docker for windows
 export DOCKER_HOST=tcp://0.0.0.0:2375
+
 # Bind custom mount points to fix Docker for Windows and WSL differences:
-sudo mkdir -p /c
-sudo mount --bind /mnt/c /c
+for f in /mnt/*; do
+    if [ -d \$f ]; then
+        f=\$(basename \$f)
+        sudo mkdir -p /\$f
+        sudo mount --bind /mnt/\$f /\$f
+    fi
+done
+
 # Start zsh
 if [ -t 1 ]; then
   clear
