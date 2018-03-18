@@ -70,9 +70,16 @@ cat > /home/${SUDO_USER}/.wsl-starter <<- EOM
 echo "Starting, please wait..."
 # Export docker host for docker for windows
 export DOCKER_HOST=tcp://0.0.0.0:2375
+
 # Bind custom mount points to fix Docker for Windows and WSL differences:
-sudo mkdir -p /c
-sudo mount --bind /mnt/c /c
+for f in /mnt/*; do
+    if [ -d \$f ]; then
+        f=\$(basename \$f)
+        sudo mkdir -p /\$f
+        sudo mount --bind /mnt/\$f /\$f
+    fi
+done
+
 # Start zsh
 if [ -t 1 ]; then
   clear
