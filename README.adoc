@@ -10,13 +10,9 @@ Please read the Technical details for more informations
 
 == Installation
 
-Install curl or wget and launch 
+Clone this repository and launch 
 
-`curl https://raw.githubusercontent.com/willoucom/wsl-installation/master/install_debian.sh | sudo bash`
-
-`wget -O - https://raw.githubusercontent.com/willoucom/wsl-installation/master/install_debian.sh | sudo bash`
-
-Since this script need root privileges, you must read the script before execute it and/or read the documentation
+`./install.sh`
 
 === Use with docker for windows 
 
@@ -28,60 +24,22 @@ You may also need to share your c: drive if you want to use volumes on disk
 
 image::docker_share.png[Docker share]
 
-== Uninstallation
-
-- Remove the file `~/.wsl-starter`
-- Edit your `~/.bashrc` and remove the last lines :
-----
-if [ -f ~/.wsl-starter ]; then
-  . ~/.wsl-starter
-fi`
-----
-- (optional) you can uninstall link:#_installed_packages[installed packages]
-
 == Technical details
 
 === Installed packages
 
-- apt-transport-https
-- ca-certificates
-- curl
-- docker-ce
-- docker-compose
 - git
-- gnupg2
-- lsb-release
-- software-properties-common
-- unzip
-- wget
-- zsh
+- vim
+- python-minimal 
+- python-pip
 
 and dependancies
 
-=== Zsh 
-
-Zsh and oh-my-zsh is installed and pre-configured (using default options)
-
-You can read the link:https://github.com/robbyrussell/oh-my-zsh/wiki[oh-my-zsh documentation]
-
-If you are looking for a good theme, link:https://github.com/agnoster/agnoster-zsh-theme[agnoster] is a must try
-
-=== Terminal font
-
-If you are looking for a good font for your terminal, especially if you want to use link:https://github.com/powerline/powerline#screenshots[powerline] you can try link:https://fonts.google.com/specimen/Inconsolata[Inconsolata]
-
 === Docker volume mount 
 
-If you want to use docker volume mount, WSL make an incorrect drive mapping, to correct it, a `bind mount` is created at startup
+If you want to use docker volume mount, WSL make an incorrect drive mapping, the configuration file for wsl located in /etc/wsl.conf is updated to correct this issue.
 
-In essence you must map your `c:/` into `/c/` but WSL map into `/mnt/c/`
-
-Check `~/.wsl-starter` for details
-
-=== Script
-
-- A custom script will be installed in `~/.wsl-starter`
-- This script is launched at the end of your `~/.bashrc`
+Ex: Your `C:` drive is mapped in `/c/`
 
 === Reset Subsystem
 
