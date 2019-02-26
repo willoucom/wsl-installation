@@ -1,0 +1,53 @@
+---
+# tasks file for common
+
+- name: Install Common tools
+  become: true
+  apt:
+    state: present
+    name: "{{item}}"
+  loop:
+    - git
+    - vim
+
+- name: Add another bin dir to system-wide $PATH.
+  become: true
+  copy:
+    dest: /etc/profile.d/custom-path.sh
+    content: 'PATH=$PATH:$HOME/.local/bin/'
+
+- name: Passwordless Sudo
+  become: true
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/passwordless
+
+- name: Update WSL mount points
+  become: true
+  template:
+    src: wsl.conf.j2
+    dest: /etc/wsl.conf
+
+- name: Add common bash aliases
+  template:
+    src: bash.aliases.j2
+    dest: ~/.bash_aliases
+
+- name: add groups
+  become: yes
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "sudo"
+    - "docker"
+
+- name: adding existing user to group docker
+  become: true
+  user:
+    name: '{{ ansible_env.USER }}'
+    groups: "{{ item }}"
+    append: yes
+  with_items:
+    - "sudo"
+    - "docker"    
