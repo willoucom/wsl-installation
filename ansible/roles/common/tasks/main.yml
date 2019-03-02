@@ -10,17 +10,17 @@
     - git
     - vim
 
-- name: Add another bin dir to system-wide $PATH.
-  become: true
-  copy:
-    dest: /etc/profile.d/custom-path.sh
-    content: 'PATH=$PATH:$HOME/.local/bin/'
-
 - name: Passwordless Sudo
   become: true
   template:
     src: sudoers.j2
     dest: /etc/sudoers.d/passwordless
+
+- name: Configure WSL in profile.d
+  become: true
+  template:
+    src: wsl.bash.j2
+    dest: /etc/profile.d/wsl.sh
 
 - name: Update WSL mount points
   become: true
@@ -50,4 +50,4 @@
     append: yes
   with_items:
     - "sudo"
-    - "docker"    
+    - "docker"

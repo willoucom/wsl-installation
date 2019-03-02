@@ -1,0 +1,12 @@
+## Managed by ansible
+
+# Add new path
+export PATH=$PATH:$HOME/.local/bin/
+
+# Set docker host
+export DOCKER_HOST=tcp://0.0.0.0:2375
+
+# Note: Bash on Windows does not currently apply umask properly.
+if [ "$(umask)" = "0000" ]; then
+    umask 022
+fi
