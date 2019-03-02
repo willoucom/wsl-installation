@@ -10,9 +10,8 @@ Please read the Technical details for more informations
 
 == Installation
 
-Clone this repository and launch 
-
-`./install.sh`
+- Set the umask to 0022 (known bug of wsl: https://github.com/Microsoft/WSL/issues/352): `umask 0022`
+- Clone this repository and launch `./install.sh`
 
 === Use with docker for windows 
 
