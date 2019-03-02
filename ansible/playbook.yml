@@ -8,3 +8,4 @@
   become: true
   roles:
      - geerlingguy.docker
+     - geerlingguy.nodejs
