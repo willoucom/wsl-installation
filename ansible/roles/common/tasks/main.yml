@@ -9,6 +9,7 @@
   loop:
     - git
     - vim
+    - shellcheck
 
 - name: Passwordless Sudo
   become: true
