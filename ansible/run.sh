@@ -1,8 +1,8 @@
 #! /bin/bash
 set -e
 
-DIR="$(dirname `readlink -f -- ${0}`)"
-cd $DIR
+DIR="$(dirname "$(readlink -f -- "${0}")")"
+cd "$DIR"
 
 export PATH=~/.local/bin/:$PATH
 
