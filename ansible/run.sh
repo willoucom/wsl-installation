@@ -8,3 +8,5 @@ export PATH=~/.local/bin/:$PATH
 
 ansible-galaxy install --roles-path galaxy -r requirements.yml
 ansible-playbook playbook.yml
+
+echo "Installation complete"

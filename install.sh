@@ -5,18 +5,20 @@ DIR="$(dirname "$(readlink -f -- "${0}")")"
 cd "$DIR"
 export PATH=~/.local/bin/:$PATH
 
-# Update linux
+# Update package list
 sudo apt-get update
-sudo apt-get upgrade -y
 
 # Install minimal python requirements
 sudo apt-get install -y \
     python-minimal \
     python-pip
 
-# Update pip and install ansible
-pip install pip --upgrade
+# Install ansible
 pip install ansible 
+
+# Fix permissions
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 644 {} \;
 
 # Run ansible
 cd ansible 
